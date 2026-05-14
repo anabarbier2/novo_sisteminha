@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aluno em Foco - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css_login.css') }}">
+</head>
+<body>
+
+    <div class="header-bg">
+        <p>Instituto Federal de Mato Grosso do Sul</p>
+        <h1>Aluno em Foco</h1>
+        <p>Um Modelo de Login</p>
+    </div>
+
+    <div class="login-card">
+        <h2>Autenticação de acesso</h2>
+        <span>Escolha o meio de acesso</span>
+
+        {% if erro %}
+            <div class="error-msg">{{ erro }}</div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('login') }}">
+            <div class="form-group">
+                <input type="text" name="usuario" placeholder="Utilizador" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="senha" placeholder="Palavra-passe" required>
+            </div>
+            <button type="submit" class="btn-submit">Entrar no Sistema</button>
+        </form>
+
+        <div class="signup-link">
+            Ainda não tem conta? <a href="{{ url_for('cadastro') }}">Cadastre-se aqui</a>
+        </div>
+    </div>
+
+    <div class="footer-info">
+        Caso ocorra alguma inconsistência favor procurar a Central de Relacionamento (CEREL) do seu campus.
+    </div>
+
+</body>
+</html>
