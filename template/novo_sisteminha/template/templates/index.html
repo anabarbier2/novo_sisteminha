@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Relatório de Reprovações
+    </title>
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+</head>
+
+<body class="bg-light">
+
+<div class="container py-4">
+
+    <!-- TÍTULO -->
+
+    <div class="mb-4">
+
+        <h1 class="display-5">
+            📊 Relatório Interativo de Reprovações
+        </h1>
+
+        <p class="text-muted">
+            Sistema acadêmico em Flask + Pandas
+        </p>
+
+    </div>
+
+
+    <!-- FILTROS -->
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                📌 Filtros
+            </h4>
+
+            <form method="GET">
+
+                <div class="row g-3">
+
+                    <!-- CURSO -->
+
+                    <div class="col-md-3">
+
+                        <label class="form-label">
+                            Curso
+                        </label>
+
+                        <select
+                            name="curso"
+                            class="form-select"
+                        >
+
+                            <option value="Todos">
+                                Todos
+                            </option>
+
+                            {% for c in cursos %}
+
+                            <option
+                                value="{{ c }}"
+                                {% if curso == c %}
+                                selected
+                                {% endif %}
+                            >
+                                {{ c }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- SEMESTRE -->
+
+                    <div class="col-md-3">
+
+                        <label class="form-label">
+                            Semestre
+                        </label>
+
+                        <select
+                            name="semestre"
+                            class="form-select"
+                        >
+
+                            <option value="Todos">
+                                Todos
+                            </option>
+
+                            {% for s in semestres %}
+
+                            <option
+                                value="{{ s }}"
+                                {% if semestre == s %}
+                                selected
+                                {% endif %}
+                            >
+                                {{ s }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- ALUNO -->
+
+                    <div class="col-md-3">
+
+                        <label class="form-label">
+                            Aluno
+                        </label>
+
+                        <select
+                            name="aluno"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Nenhum
+                            </option>
+
+                            {% for a in alunos %}
+
+                            <option
+                                value="{{ a }}"
+                                {% if aluno == a %}
+                                selected
+                                {% endif %}
+                            >
+                                {{ a }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- DISCIPLINA -->
+
+                    <div class="col-md-3">
+
+                        <label class="form-label">
+                            Disciplina
+                        </label>
+
+                        <select
+                            name="disciplina"
+                            class="form-select"
+                        >
+
+                            <option value="">
+                                Nenhuma
+                            </option>
+
+                            {% for d in disciplinas %}
+
+                            <option
+                                value="{{ d }}"
+                                {% if disciplina == d %}
+                                selected
+                                {% endif %}
+                            >
+                                {{ d }}
+                            </option>
+
+                            {% endfor %}
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+                <div class="mt-4">
+
+                    <button
+                        type="submit"
+                        class="btn btn-primary"
+                    >
+                        🔎 Filtrar
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- DADOS DO ALUNO -->
+
+    {% if dados_aluno %}
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                👨‍🎓 Dados do aluno
+            </h4>
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-striped">
+
+                    <thead class="table-dark">
+
+                    <tr>
+
+                        {% for coluna in dados_aluno[0].keys() %}
+
+                        <th>
+                            {{ coluna }}
+                        </th>
+
+                        {% endfor %}
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for linha in dados_aluno %}
+
+                    <tr>
+
+                        {% for valor in linha.values() %}
+
+                        <td>
+                            {{ valor }}
+                        </td>
+
+                        {% endfor %}
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- DADOS DA DISCIPLINA -->
+
+    {% if dados_disciplina %}
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                📚 Dados da disciplina
+            </h4>
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-striped">
+
+                    <thead class="table-dark">
+
+                    <tr>
+
+                        {% for coluna in dados_disciplina[0].keys() %}
+
+                        <th>
+                            {{ coluna }}
+                        </th>
+
+                        {% endfor %}
+
+                    </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                    {% for linha in dados_disciplina %}
+
+                    <tr>
+
+                        {% for valor in linha.values() %}
+
+                        <td>
+                            {{ valor }}
+                        </td>
+
+                        {% endfor %}
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+    <!-- ESTATÍSTICAS -->
+
+    <div class="row">
+
+        <!-- DISCIPLINAS -->
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+                        📈 Disciplinas com mais reprovações
+                    </h4>
+
+                    <div class="table-responsive">
+
+    
+                        <table class="table table-bordered">
+
+                            <thead class="table-dark">
+
+                            <tr>
+
+                                <th>
+                                    Disciplina
+                                </th>
+
+                                <th>
+                                    Reprovações
+                                </th>
+
+                            </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                            {% for linha in reprovacoes_disc %}
+
+                            <tr>
+
+                                <td>
+                                    {{ linha["Disciplina"] }}
+                                </td>
+
+                                <td>
+                                    {{ linha["Reprovações"] }}
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ALUNOS -->
+
+        <div class="col-md-6">
+
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-body">
+
+                    <h4 class="mb-3">
+                        👨‍🎓 Alunos com mais reprovações
+                    </h4>
+
+                    <div class="table-responsive">
+
+                        <table class="table table-bordered">
+
+                            <thead class="table-dark">
+
+                            <tr>
+
+                                <th>
+                                    Aluno
+                                </th>
+
+                                <th>
+                                    Reprovações
+                                </th>
+
+                            </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                            {% for linha in reprovacoes_alunos %}
+
+                            <tr>
+
+                                <td>
+                                    {{ linha["Estudante"] }}
+                                </td>
+
+                                <td>
+                                    {{ linha["Reprovações"] }}
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- EXPORTAÇÃO -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <h4 class="mb-3">
+                📥 Exportar Dados
+            </h4>
+
+            <a
+                href="/download/alunos"
+                class="btn btn-success me-2"
+            >
+                ⬇️ CSV Alunos
+            </a>
+
+            <a
+                href="/download/disciplinas"
+                class="btn btn-warning"
+            >
+                ⬇️ CSV Disciplinas
+            </a>
+<form action="{{ url_for('logout') }}" method="GET" style="display: inline; float: right;">
+    <button type="submit" class="btn btn-danger">
+        Sair do Sistema
+    </button>
+</form>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
